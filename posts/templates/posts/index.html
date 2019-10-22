@@ -6,8 +6,9 @@
 
 {% block body %}
     {% for post in posts %}
-        <h2>{{post.title}}</h2>
-        <p>{{post.desc}}</p>
-        <p>{{post.created_at}}</p>
+        <a href="{% url 'posts:single' slug=post.slug %}">
+            <h2>{{post.title}}</h2>
+        </a>
+            <p>{{post.created_at}}</p>
     {% endfor %}
 {% endblock %}
