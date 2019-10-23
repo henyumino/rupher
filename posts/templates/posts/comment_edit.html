@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Edit komentar
+{% endblock %}
+
+{% block body %}
+    <form action="{% url 'posts:comment-edit' comment.id %}" method="post">
+        {% if errors %}
+            <p class="is-error">{{ errors }}</p>
+        {% endif %}
+        {% csrf_token %}
+        <textarea name="desc" cols="30" rows="5">{{comment.desc}}</textarea><br>
+        <input type="submit" value="edit komentar">
+    </form>
+{% endblock %}

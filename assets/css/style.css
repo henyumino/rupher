@@ -1,3 +1,6 @@
 body{
     background: grey;
 }
+.is-error{
+    color: red;
+}
