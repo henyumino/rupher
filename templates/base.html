@@ -12,6 +12,11 @@
     <nav>
         <a href="/">Home</a>
         <a href="{% url 'posts:index' %}">Post</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'accounts:logout' %}">logout</a>
+        {% else %}
+            <a href="{% url 'accounts:login' %}">login</a>
+        {% endif %}
     </nav>
     <hr>
     {% block body %}{% endblock %}

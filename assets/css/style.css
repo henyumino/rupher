@@ -1,6 +1,6 @@
 body{
     background: grey;
 }
-.is-error{
+.is-error, .errorlist{
     color: red;
 }

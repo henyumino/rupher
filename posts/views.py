@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404,render
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Post,Comment
+from django.contrib.auth.decorators import login_required
 
 def handler404(request):
     return render(request, '404.html', status=404)
