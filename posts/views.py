@@ -19,6 +19,7 @@ def comment(request,id):
 
     if request.method == 'POST':
         newDesc = request.POST['desc']
+        # user_id = request.POST['user_id']
 
         if len(newDesc) < 10:
             return render(request, 'posts/single.html',{
@@ -26,11 +27,14 @@ def comment(request,id):
                                 'errors':'minimal 10 karakter'
                                 })
 
-        post.comment_set.create(desc=newDesc,user_id='1')
+        post.comment_set.create(desc=newDesc)
         return HttpResponseRedirect('/posts/%s'%post.slug) 
 
 def comment_edit(request,id):
     comment = get_object_or_404(Comment, pk=id)
+
+    if request.user.id != comment.user.id:
+        return render(request, '404.html')
 
     if request.method == 'POST':
         newDesc = request.POST['desc']

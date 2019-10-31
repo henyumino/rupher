@@ -12,6 +12,7 @@
     <hr>
     {% if user.is_authenticated %}
         <form action="{% url 'posts:comment' post.id %}" method="post">
+            <input type="hidden" name="user_id" value="{{ request.user.id }}">
             {% if errors %}
                 <p class="is-error">{{ errors }}</p>
             {% endif %}
@@ -24,6 +25,12 @@
     {% endif %}
     
     {% for comment in post.comment_set.all %}
-        <p>{{comment.desc}} - <a href="{% url 'posts:comment-edit' comment.id %}">Edit</a></p> 
+        <p>{{comment.image}} - {{comment.desc}} - 
+        
+        {% if request.user.id == comment.user.id %}
+            <a href="{% url 'posts:comment-edit' comment.id %}">Edit</a></p>
+        {% else %}
+        
+        {% endif %} 
     {% endfor %}
 {% endblock %}
