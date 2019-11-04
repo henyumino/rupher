@@ -10,6 +10,7 @@ class Post(models.Model):
     desc    = models.TextField()
     image    = models.CharField(max_length=255)
     slug    = models.TextField(null=True)
+    #draf status
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

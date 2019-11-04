@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    new post
+{% endblock %}
+
+{% block body %}
+    <h2>form upload</h2>
+    <form action="{% url 'posts:post-new' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="image">
+        <input type="submit" value="upload">
+    </form>
+    {{id_unik}}
+{% endblock %}
