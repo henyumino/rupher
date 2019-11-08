@@ -6,11 +6,14 @@
 
 {% block body %}
     <h2>{{post.title}}</h2>
-    <p>{{post.desc}}</p>
+    <p>{{post.desc|safe}}</p>
     <p>{{post.created_at}}</p>
     <p>{{post.slug}}</p>
     <hr>
     {% if user.is_authenticated %}
+        <b>komentar</b>
+        <br>
+        <hr>
         <form action="{% url 'posts:comment' post.id %}" method="post">
             <input type="hidden" name="user_id" value="{{ request.user.id }}">
             {% if errors %}
@@ -25,7 +28,7 @@
     {% endif %}
     
     {% for comment in post.comment_set.all %}
-        <p>{{comment.image}} - {{comment.desc}} - 
+        <p>{{comment.user}} - {{comment.desc}} - 
         
         {% if request.user.id == comment.user.id %}
             <a href="{% url 'posts:comment-edit' comment.id %}">Edit</a></p>

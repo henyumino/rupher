@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'django_summernote',
 ]
 
 MIDDLEWARE = [
@@ -133,8 +134,23 @@ STATICFILES_DIRS = [
     '/var/www/static/',
 ]
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/accounts/login'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'storage')
 MEDIA_URL = '/storage/'
+
+SUMMERNOTE_CONFIG = {
+    'summernote' : {
+        'toolbar' : [
+            ['style', ['bold', 'italic', 'underline']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph','style']],
+            ['height', ['height']],
+            ['misc', ['picture', 'print' ]],
+        ]
+    }
+}
+

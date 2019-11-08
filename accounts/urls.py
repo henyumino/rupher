@@ -7,4 +7,5 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('activate/<uidb64>/<token>',views.activate, name='activate'),
     path('',include('django.contrib.auth.urls')),
+    path('settings/',views.edit_user,name='edit-user'),
 ]

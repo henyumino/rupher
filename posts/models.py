@@ -8,9 +8,8 @@ class Post(models.Model):
     user_id = models.CharField(max_length=255)
     title   = models.CharField(max_length=255)
     desc    = models.TextField()
-    image    = models.CharField(max_length=255)
     slug    = models.TextField(null=True)
-    #draf status
+    status  = models.CharField(max_length=255,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -26,9 +25,14 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile')
     activation_key = models.CharField(max_length=255,default=1)
     email_validated = models.BooleanField(default=False)
+    user_image = models.CharField(max_length=255,default='dummy.jpg')
 
     def __str__(self):
         return self.user.username
+
+    def image(self):
+        return self.user.image
+
 
 @receiver(post_save, sender=User, dispatch_uid="save_new_user_profile")
 def save_profile(sender, instance, created, **kwargs):

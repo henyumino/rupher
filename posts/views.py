@@ -3,12 +3,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Post,Comment
 from django.contrib.auth.decorators import login_required
 from django.utils.crypto import get_random_string
+from .forms import NewPostForm
 
 def handler404(request):
     return render(request, '404.html', status=404)
 
 def index(request):
-    posts = Post.objects.all()
+    posts = Post.objects.order_by('-created_at')
     return render(request,'posts/index.html',{'posts':posts})
 
 def single(request, slug):
@@ -20,7 +21,6 @@ def comment(request,id):
 
     if request.method == 'POST':
         newDesc = request.POST['desc']
-        # user_id = request.POST['user_id']
 
         if len(newDesc) < 10:
             return render(request, 'posts/single.html',{
@@ -28,7 +28,7 @@ def comment(request,id):
                                 'errors':'minimal 10 karakter'
                                 })
 
-        post.comment_set.create(desc=newDesc)
+        post.comment_set.create(desc=newDesc,user=request.user)
         return HttpResponseRedirect('/posts/%s'%post.slug) 
 
 def comment_edit(request,id):
@@ -45,7 +45,35 @@ def comment_edit(request,id):
     return render(request, 'posts/comment_edit.html',{'comment':comment})
 
 def post_new(request):
-    id_unik = get_random_string(length=12, allowed_chars='1234567890')
+    if request.method == 'POST':
+        form = NewPostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user_id = request.user.id
+            post.save()
+            return HttpResponseRedirect('/posts')
+    else:
+        form = NewPostForm()
 
-    return render(request, 'posts/new.html',{'id_unik':id_unik})
-    #id unik sebagai penanda image id , jadi setiap post memiliki 1 unik id untuk foregin key di table image
+    return render(request, 'posts/new.html',{'form':form})
+
+def post_edit(request,slug):
+    post = get_object_or_404(Post, slug=slug)
+    form = NewPostForm(instance=post)
+
+    active_user = str(request.user.id)
+
+    if active_user != post.user_id:
+        return render(request, '404.html')
+
+    if request.method == 'POST':
+        form = NewPostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/dashboard/')
+
+    # tinggal buat edit post saja
+
+    return render(request, 'posts/edit_post.html',{'form':form})
+
+   

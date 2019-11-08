@@ -10,6 +10,11 @@ from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from . forms import SignUpForm
 from . tokens import account_activation_token
+from posts.models import Profile
+from django.contrib.auth.decorators import login_required
+from django.utils.crypto import get_random_string
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse, HttpResponseRedirect
 
 def signup(request):
     if request.method == 'POST':
@@ -27,7 +32,7 @@ def signup(request):
                 'token' : account_activation_token.make_token(user) 
             })
 
-            user.email_user(subject, message)
+            user.email_user(subject,'',html_message=message)
             messages.success(request,'silahkan cek inbox email anda')
             return redirect(reverse('login'))
     else:
@@ -51,3 +56,30 @@ def activate(request, uidb64, token):
     else:
         messages.success(request,'kesalahan aktivasi')
         return redirect(reverse('login'))
+
+@login_required
+def edit_user(request):
+    user = User.objects.get(pk=request.user.id)
+    errors = []
+    domain = get_current_site(request).domain
+
+    if request.method == "POST" and request.FILES['image']:
+        file = request.FILES['image']
+        allow_ext = ['image/jpeg','image/png']
+        
+        
+        if file.size < 2097152:
+            if file.content_type in allow_ext:
+                newfilename = get_random_string(length=18, allowed_chars='1234567890') + '.jpg'
+                fs  = FileSystemStorage(location='storage/image_profile')
+                fs.save(newfilename, file)
+                user.profile.user_image = newfilename
+                user.profile.save()
+                return HttpResponseRedirect('/dashboard')
+            else:
+                errors.append('ekstentesi tidak didukung')
+        else:
+            errors.append('ukuran file terlalu besar')
+
+    
+    return render(request,'settings.html',{'user':user,'errors':errors,'domain':domain})

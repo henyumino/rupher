@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    new post
+    edit post
 {% endblock %}
 
 {% block body %}
-    <h2>form upload</h2>
+    <h2>edit post</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
@@ -13,11 +13,5 @@
     </form>
 {% endblock %}
 {% block js %}
-    <script>
-        $('#id_title').on('keyup',function(){
-            var slug = $('#id_title').val();
-            slug = slug.replace(/ /g, "-");
-            $('#id_slug').val(slug);
-        });
-    </script>
+
 {% endblock %}

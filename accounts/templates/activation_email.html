@@ -2,8 +2,9 @@
 
     Hi {{user.username}}
 
-    silahkan klik untuk aktivasi
+    silahkan  <a href="http://{{domain}}{% url 'activate' uidb64=uid token=token %}" target="_blank">klik disini</a> 
+    
+    untuk aktivasi
 
-    http://{{domain}}{% url 'activate' uidb64=uid token=token %}
 
 {% endautoescape %}
