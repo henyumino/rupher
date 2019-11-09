@@ -30,9 +30,6 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-    def image(self):
-        return self.user.image
-
 
 @receiver(post_save, sender=User, dispatch_uid="save_new_user_profile")
 def save_profile(sender, instance, created, **kwargs):
