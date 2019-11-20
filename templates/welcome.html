@@ -1,16 +1,131 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}
-    Post
+Post
 {% endblock %}
 
 {% block body %}
-    <h1>welcome</h1>
-    <h2>Halo {{request.user.username}}</h2>
-    {% for post in posts %}
-        <a href="{% url 'posts:single' slug=post.slug %}">
-            <h2>{{post.title}}</h2>
-        </a>
-            <p>{{post.created_at}}</p>
-    {% endfor %}
+
+<div class="container-fluid content-container">
+    {% if user.is_authenticated %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <a class="navbar-brand ml-4" href="#">
+        <img src="{% static '/bootstrap/bootstrap-4.svg' %}" width="30" height="30" class="d-inline-block align-top"
+          alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto mr-5 user-m">
+          <li class="nav-item">
+            <a class="nav-link ml-4" href="{% url 'dashboard' %}">
+              <div class="nav-profile rounded-circle border" style="background-image: url('{{domain}}/storage/image_profile/{{request.user.profile.user_image}}')"></div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ml-4" href="{% url 'logout' %}">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    {% else %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top navbar-s nav-single">
+      <a class="navbar-brand ml-4" href="#">
+        <img src="{% static '/bootstrap/bootstrap-4.svg' %}" width="30" height="30" class="d-inline-block align-top"
+          alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto mr-5 user-m">
+          <li class="nav-item">
+            <a class="nav-link ml-4" href="{% url 'signup' %}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ml-4" href="{% url 'login' %}">Login</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    {% endif %}
+  <div class="row row-section">
+    <h1>Its my blog welcome to my blog</h1>
+  </div>
+  <div class="row row-post">
+    <nav aria-label="breadcrumb" class="heading-label">
+      <ol class="breadcrumb ml-5 heading-section border-bottom-p">
+        <li class="breadcrumb-item" aria-current="page">Post</li>
+      </ol>
+    </nav>
+    <div class="post-section">
+      <div class="list-post-wraper">
+        <div class="list-post">
+          <a href="#">
+            <div class="img-box" style="background-image: url('http://oswallpapers.com/wp-content/uploads/2018/11/desktop-1024x576-640x480.jpg')"></div>
+          </a>
+          <a href="#" class="list-post-title">
+            <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita</h2>
+          </a>
+          <div class="post-category"></div>
+        </div>
+        <div class="list-post">
+          <a href="#">
+            <div class="img-box" style="background-image: url('http://oswallpapers.com/wp-content/uploads/2018/11/desktop-1024x576-640x480.jpg')"></div>
+          </a>
+          <a href="#" class="list-post-title">
+            <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita</h2>
+          </a>
+          <div class="post-category"></div>
+        </div>
+        <div class="list-post">
+          <a href="#">
+            <div class="img-box" style="background-image: url('http://oswallpapers.com/wp-content/uploads/2018/11/desktop-1024x576-640x480.jpg')"></div>
+          </a>
+          <a href="#" class="list-post-title">
+            <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita</h2>
+          </a>
+          <div class="post-category"></div>
+        </div>
+      </div>
+    </div>
+    <div class="paginating">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div class="row footer">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center justify-content-center">
+        <div class="col-sm">
+          <div class="row">
+            <div class="col-sm text-center a-link"><a href="#">Instagram</a></div>
+            <div class="col-sm text-center a-link"><a href="#">Youtube</a></div>
+          </div>
+        </div>
+        <div class="col-sm text-center">
+          <img src="{% static '/bootstrap/bootstrap-4.svg' %}" width="30" height="30" class="d-inline-block align-top"
+          alt="">
+        </div>
+        <div class="col-sm">
+          <div class="row">
+            <div class="col-sm text-center a-link"><a href="#">Terms of Service</a></div>
+            <div class="col-sm text-center a-link"><a href="#">Policy</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

@@ -115,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Makassar'
+TIME_ZONE = 'Asia/Singapore'
 
 USE_I18N = True
 
@@ -154,3 +154,4 @@ SUMMERNOTE_CONFIG = {
     }
 }
 
+CURRENT_DOMAIN = 'http://localhost:8000'

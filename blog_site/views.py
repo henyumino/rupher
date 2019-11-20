@@ -9,3 +9,4 @@ def index(request):
 def dashboard(request):
     posts = Post.objects.filter(user_id=request.user.id).order_by('-created_at')
     return render(request,'dashboard.html',{'posts':posts})
+

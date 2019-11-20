@@ -4,6 +4,7 @@ from .models import Post,Comment
 from django.contrib.auth.decorators import login_required
 from django.utils.crypto import get_random_string
 from .forms import NewPostForm
+from django.conf import settings
 
 def handler404(request):
     return render(request, '404.html', status=404)
@@ -14,7 +15,7 @@ def index(request):
 
 def single(request, slug):
     post = get_object_or_404(Post,slug = slug)
-    return render(request,'posts/single.html',{'post':post})
+    return render(request,'posts/single.html',{'post':post,'domain':settings.CURRENT_DOMAIN})
 
 def comment(request,id):
     post = get_object_or_404(Post, pk=id)
@@ -46,7 +47,7 @@ def comment_edit(request,id):
 
 def post_new(request):
     if request.method == 'POST':
-        form = NewPostForm(request.POST)
+        form = NewPostForm(request.POST,request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.user_id = request.user.id
@@ -61,7 +62,7 @@ def post_edit(request,slug):
     post = get_object_or_404(Post, slug=slug)
     form = NewPostForm(instance=post)
 
-    active_user = str(request.user.id)
+    active_user = request.user.id
 
     if active_user != post.user_id:
         return render(request, '404.html')

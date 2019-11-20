@@ -10,7 +10,7 @@ class NewPostForm(ModelForm):
 
     class Meta:
         model = Post
-        fields = ('title','slug','desc')
+        fields = ('title','slug','thumbnail','desc','status')
         widgets = {
             'desc' : SummernoteWidget()
         }

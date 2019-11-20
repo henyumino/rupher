@@ -10,7 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/',include('accounts.urls', namespace='')),
     path('summernote/', include('django_summernote.urls')),
-    path('dashboard/',views.dashboard)
+    path('dashboard/',views.dashboard, name='dashboard')
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

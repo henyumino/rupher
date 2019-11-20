@@ -1,44 +1,141 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}
     Post
 {% endblock %}
 
 {% block body %}
-    <h2>{{post.title}}</h2>
-    <p>{{post.desc|safe}}</p>
-    <p>{{post.created_at}}</p>
-    <p>{{post.slug}}</p>
-    <hr>
-    {% if user.is_authenticated %}
-        <b>komentar</b>
-        <br>
-        <hr>
-        <form action="{% url 'posts:comment' post.id %}" method="post">
-            <input type="hidden" name="user_id" value="{{ request.user.id }}">
-            {% if errors %}
-                <p class="is-error">{{ errors }}</p>
-            {% endif %}
-            {% csrf_token %}
-            <textarea name="desc" cols="30" rows="5"></textarea><br>
-            <input type="submit" value="submit">
-        </form>
-    {% else %}
-        <p>harus login untuk komentar</p>
-    {% endif %}
     
-    {% for comment in post.comment_set.all %}
+<div class="container-fluid content-container">
+    {% if user.is_authenticated %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top navbar-s nav-single">
+      <a class="navbar-brand ml-4" href="#">
+        <img src="{% static '/bootstrap/bootstrap-4.svg' %}" width="30" height="30" class="d-inline-block align-top"
+          alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto mr-5 user-m">
+          <li class="nav-item">
+            <a class="nav-link ml-4" href="{% url 'dashboard' %}">
+              <div class="nav-profile rounded-circle border" style="background-image: url('{{domain}}/storage/image_profile/{{request.user.profile.user_image}}')"></div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ml-4" href="{% url 'logout' %}">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    {% else %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top navbar-s nav-single">
+      <a class="navbar-brand ml-4" href="#">
+        <img src="{% static '/bootstrap/bootstrap-4.svg' %}" width="30" height="30" class="d-inline-block align-top"
+          alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto mr-5 user-m">
+          <li class="nav-item">
+            <a class="nav-link ml-4" href="{% url 'signup' %}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ml-4" href="{% url 'login' %}">Login</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    {% endif %}
 
-        <p>{{comment.user.profile.user_image}} - {{comment.user}} - {{comment.desc}} - 
-
-        {% if request.user.id == comment.user.id %}
-            <a href="{% url 'posts:comment-edit' comment.id %}">Edit</a></p>
+    <div class="row row-section row-single" style="background-image: url('{{domain}}/storage/{{post.thumbnail}}')">
+      <h1>{{post.title}}</h1>
+    </div>
+    <div class="row-single-post">
+        <div class="author-section">
+          <div class="row h-100 justify-content-center align-items-center">
+            <div class="col-sm">{{post.datepublished}}</div>
+            <div class="col-sm text-right">By {{post.author}}</div>
+          </div>
+        </div>
+        {{post.desc|safe}}
+        {% if user.is_authenticated %}
+          <div class="comment-section row mx-auto mt-5">
+            <h2>Leave a comment</h2>
+            <form action="{% url 'posts:comment' post.id %}" method="post">
+              {% csrf_token %}
+              <textarea name="desc" cols="85" rows="4" class="comment-border"></textarea>
+              <button type="submit" class="btn btn-light float-right mt-2 mb-2">Post comment</button>
+            </form>
+              {% if errors %}
+                    <p class="is-error">{{ errors }}</p>
+              {% endif %}
+          </div>
         {% else %}
-        
-        {% endif %} 
+          <div class="container-fluid text-center mt-5 mb-5">
+            <h3>harus login untuk komentar</h3>
+          </div>
+        {% endif %}
 
-        </p>
-        {{comment.created_at}}
+        {% for comment in post.comment_set.all %}
+        <div class="container-fluid comment-user mb-5">
+          <div class="row">
+            <div class="col-2 nomargin">
+              <div class="comment-user-photo rounded-circle" style="background: url('{{domain}}/storage/image_profile/{{comment.user.profile.user_image}}')">
+                
+              </div>
+            </div>
+            <div class="col-10">
+              <div class="col-sm">
+                <div class="row">
+                    <div class="col-10 border-bottom">
+                      {{comment.user}}
+                    </div>
+                    <div class="col-2 text-right">
+                      {% if request.user.id == comment.user.id %}
+                        <a href="{% url 'posts:comment-edit' comment.id %}" class="a-link mb-0">Edit</a>
+                      {% else %}
+                    
+                      {% endif %} 
+                    </div>
+                </div>
+              </div>
+              <div class="col-sm">
+                <div class="comment-desc">{{comment.desc}}</div>
+              </div>
+              <div class="col-sm text-right">{{comment.commentpub}}</div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row footer">
+      <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center">
+          <div class="col-sm">
+            <div class="row">
+              <div class="col-sm text-center a-link"><a href="#">Instagram</a></div>
+              <div class="col-sm text-center a-link"><a href="#">Youtube</a></div>
+            </div>
+          </div>
+          <div class="col-sm text-center">
+            <img src="{% static '/bootstrap/bootstrap-4.svg' %}" width="30" height="30" class="d-inline-block align-top"
+            alt="">
+          </div>
+          <div class="col-sm">
+            <div class="row">
+              <div class="col-sm text-center a-link"><a href="#">Terms of Service</a></div>
+              <div class="col-sm text-center a-link"><a href="#">Policy</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    {% endfor %}
 {% endblock %}
