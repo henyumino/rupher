@@ -169,6 +169,14 @@
     background-size: cover !important;
     background-repeat: no-repeat !important;
 }
+.nopadding{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.opt-button{
+    background: transparent !important;
+    border: none;
+}
 
 /* responsive */
 

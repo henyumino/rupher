@@ -26,6 +26,9 @@ class Post(models.Model):
 
     def author(self):
         return self.user.username
+    
+    def datepost(self):
+        return self.created_at.strftime('%b %d , %Y at %H:%M')
 
 
 

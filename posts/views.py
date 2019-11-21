@@ -52,14 +52,14 @@ def post_new(request):
             post = form.save(commit=False)
             post.user_id = request.user.id
             post.save()
-            return HttpResponseRedirect('/posts')
+            return HttpResponseRedirect('/dashboard')
     else:
         form = NewPostForm()
 
     return render(request, 'posts/new.html',{'form':form})
 
-def post_edit(request,slug):
-    post = get_object_or_404(Post, slug=slug)
+def post_edit(request,id):
+    post = get_object_or_404(Post, id=id)
     form = NewPostForm(instance=post)
 
     active_user = request.user.id
@@ -77,4 +77,14 @@ def post_edit(request,slug):
 
     return render(request, 'posts/edit_post.html',{'form':form})
 
-   
+def post_delete(request,id):
+    post = get_object_or_404(Post, id=id)
+
+    active_user = request.user.id
+
+    if active_user != post.user_id:
+        return render(request, '404.html')
+    
+    else:
+        post.delete()
+        return HttpResponseRedirect('/dashboard/')

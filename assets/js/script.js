@@ -17,8 +17,13 @@ $(document).scroll(function() {
 
     
 if($(window).width() !== 360){
-    $('.navbar').addClass('scroll_effect');
+    $('.navbar-w').addClass('scroll_effect');
 }
 else{
-    $('.navbar').removeClass('scroll_effect');
+    $('.navbar-w').removeClass('scroll_effect');
 }
+
+
+$(function () {
+    $('[data-toggle="popover"]').popover()
+})

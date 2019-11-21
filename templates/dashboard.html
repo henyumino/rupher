@@ -1,23 +1,102 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
-    Dashboard
+    Dashboard - {{request.user}}
 {% endblock %}
 
 {% block body %}
     
-    
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand ml-4" href="#">
+        <img src="{% static '/bootstrap/bootstrap-4.svg' %}" width="30" height="30" class="d-inline-block align-top"
+        alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto mr-5 user-m">
+        <li class="nav-item">
+            <a class="nav-link ml-4" href="{% url 'dashboard' %}">
+            <div class="nav-profile rounded-circle border" style="background-image: url('{{domain}}/storage/image_profile/{{request.user.profile.user_image}}')"></div>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link ml-4" style="color: #fff !important" href="{% url 'logout' %}">Logout</a>
+        </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="nav-d w-100" style="height: 62px"></div>
+    <div class="row mt-2">
+        <div class="col-md-2 nopadding">
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action rounded-0 border-0">
+                    <i class="fa fa-home fa-lg mr-2"></i>{{domain}}
+                </a>
+                <a href="#" class="list-group-item list-group-item-action active rounded-0 border-0">
+                    <i class="fa fa-newspaper-o fa-1x mr-2"></i> 
+                    Post
+                   <span class="badge badge-light badge-pill float-right mt-1">{{post_count}}</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action rounded-0 border-0">
+                    <i class="fa fa-gear fa-lg mr-2"></i>
+                    Setting
+                </a>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <h3>Posts</h3>
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-published" role="tab" aria-controls="nav-home" aria-selected="true">Published <span class="badge badge-pill badge-primary ml-2">{{post_pub}}</span></a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-draft" role="tab" aria-controls="nav-profile" aria-selected="false">Draft</a>
+                </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-published" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <ul class="list-group">
+                            <li class="list-group-item border-top-0">
+                                Posts
+                                <a href="{% url 'posts:post-new' %}" class="btn btn-secondary btn-sm float-right" role="button">Add Post</a> 
+                            </li>
+                            {% for post in posts %}
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-md-10 nopadding">
+                                        <div class="col-md">{{post.title}}</div>
+                                        <div class="col-md">{{post.datepost}}</div>
+                                    </div>
+                                    <div class="col-md-2 nopadding">
+                                        <div class="row">
+                                            <div class="col-md-6 col-6 nopadding">
+                                                <img src="{{domain}}/storage/{{post.thumbnail}}" class="d-block float-right" width="60" height="60" alt="">
+                                            </div>
+                                            <div class="col-md-6 col-6">
+                                                <button class="fa fa-ellipsis-h h-100 w-100 d-flex justify-content-center align-items-center opt-button" data-trigger="focus" data-toggle="popover" tabindex="0" data-html="true"  data-content='
+                                                    <ul class="list-group list-group-flush">
+                                                            <li class="list-group-item"><i class="fa fa-pencil-square-o mr-2"></i><a href="{% url 'posts:post-edit' id=post.id %}">Edit</a></li>
+                                                            <li class="list-group-item"><i class="fa fa-exclamation-circle mr-2"></i><a href="{% url 'posts:post-delete' id=post.id %}" >Delete</a></li>
+                                                    </ul>'>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="nav-draft" role="tabpanel" aria-labelledby="nav-profile-tab">Draft</div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
 
 
-
-
-    <!-- <h1>dashboard</h1>
-    <h2>Halo {{request.user.username}}</h2>
-    {% for post in posts %}
-        <a href="{% url 'posts:single' slug=post.slug %}">
-            <h2>{{post.title}}</h2>
-        </a>
-            <p>{{post.created_at}}</p>
-        <a href="{% url 'posts:post-edit' slug=post.slug %}">edit</a>
-    {% endfor %} -->
 {% endblock %}

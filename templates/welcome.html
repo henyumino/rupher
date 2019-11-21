@@ -8,7 +8,7 @@ Post
 
 <div class="container-fluid content-container">
     {% if user.is_authenticated %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top navbar-w">
       <a class="navbar-brand ml-4" href="#">
         <img src="{% static '/bootstrap/bootstrap-4.svg' %}" width="30" height="30" class="d-inline-block align-top"
           alt="">
@@ -31,7 +31,7 @@ Post
       </div>
     </nav>
     {% else %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top navbar-s nav-single">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top navbar-w">
       <a class="navbar-brand ml-4" href="#">
         <img src="{% static '/bootstrap/bootstrap-4.svg' %}" width="30" height="30" class="d-inline-block align-top"
           alt="">
@@ -104,25 +104,18 @@ Post
       </nav>
     </div>
   </div>
+  <!-- footer -->
   <div class="row footer">
     <div class="container h-100">
       <div class="row h-100 align-items-center justify-content-center">
-        <div class="col-sm">
-          <div class="row">
-            <div class="col-sm text-center a-link"><a href="#">Instagram</a></div>
-            <div class="col-sm text-center a-link"><a href="#">Youtube</a></div>
-          </div>
-        </div>
-        <div class="col-sm text-center">
+        <div class="col-md text-center a-link"><a href="#">Instagram</a></div>
+        <div class="col-md text-center a-link"><a href="#">Youtube</a></div>
+        <div class="col-md text-center">
           <img src="{% static '/bootstrap/bootstrap-4.svg' %}" width="30" height="30" class="d-inline-block align-top"
           alt="">
         </div>
-        <div class="col-sm">
-          <div class="row">
-            <div class="col-sm text-center a-link"><a href="#">Terms of Service</a></div>
-            <div class="col-sm text-center a-link"><a href="#">Policy</a></div>
-          </div>
-        </div>
+        <div class="col-md text-center a-link"><a href="#">Terms of Service</a></div>
+        <div class="col-md text-center a-link"><a href="#">Policy</a></div>
       </div>
     </div>
   </div>
