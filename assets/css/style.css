@@ -10,7 +10,7 @@
 /* body{
     background: grey;
 } */
-.is-error, .errorlist{
+.is-error, .errorlist{ 
     color: red;
 }
 .scroll_effect{
@@ -125,7 +125,13 @@
     color: #fff;
 }
 .nav-single{
-    background: transparent !important;    
+    background: transparent !important;   
+}
+.navbar-s{
+    transition: 0.5s ease-in-out !important; 
+}
+.navbar-s a{
+    transition: 0.5s ease-in-out !important; 
 }
 .nav-single a{
     color: #fff !important;

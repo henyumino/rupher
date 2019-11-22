@@ -45,6 +45,7 @@ def comment_edit(request,id):
     
     return render(request, 'posts/comment_edit.html',{'comment':comment})
 
+@login_required
 def post_new(request):
     if request.method == 'POST':
         form = NewPostForm(request.POST,request.FILES)
@@ -58,6 +59,7 @@ def post_new(request):
 
     return render(request, 'posts/new.html',{'form':form})
 
+@login_required
 def post_edit(request,id):
     post = get_object_or_404(Post, id=id)
     form = NewPostForm(instance=post)
@@ -76,7 +78,7 @@ def post_edit(request,id):
     # tinggal buat edit post saja
 
     return render(request, 'posts/edit_post.html',{'form':form})
-
+@login_required
 def post_delete(request,id):
     post = get_object_or_404(Post, id=id)
 
