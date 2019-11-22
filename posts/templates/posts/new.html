@@ -30,15 +30,27 @@
 <div class="container-fluid">
     <div class="nav-d w-100" style="height: 62px"></div>
     <div class="row mt-2">
-        <div class="form-group">
+        <div class="form-row align-items-center mx-auto">
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{form.as_p}}
+                {% for field in form %}
+                    <div class="form-group">
+                    {% if field.name == 'thumbnail' %}
+                        <div class="custom-file">
+                            <label class="custom-file-label" for="customFile">Choose file for thumbnail</label>
+                            {{field}}
+                        </div>
+                    {% else %}
+                        {{field}}
+                    {% endif %}
+                    </div>
+                {% endfor %}
                 <button type="submit">Post</button>
             </form>
         </div>
     </div>
 </div>
+
 
 
 

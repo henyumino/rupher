@@ -70,12 +70,10 @@ def post_edit(request,id):
         return render(request, '404.html')
 
     if request.method == 'POST':
-        form = NewPostForm(request.POST, instance=post)
+        form = NewPostForm(request.POST,request.FILES, instance=post)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/dashboard/')
-
-    # tinggal buat edit post saja
 
     return render(request, 'posts/edit_post.html',{'form':form})
 @login_required
