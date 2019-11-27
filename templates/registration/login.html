@@ -1,15 +1,34 @@
-{% extends 'base.html' %}
-
+{% extends 'base_regis.html' %}
 {% block title %}
     Login
 {% endblock %}
 
-{% block body %}
-    <h2>Daftar</h2>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">login</button>
-    </form>
-    <a href="{% url 'password_reset' %}">Lupa password</a>
+{% block form %}
+
+<form method="post">
+    {% csrf_token %}
+    <h1 class="text-center mb-4">Login</h1>
+    <div class="form-group">
+        {{form.username}}
+        <small id="emailHelp" class="form-text text-danger">{{form.username.errors.as_text}}</small>
+    </div>
+    <div class="form-group">
+        {{form.password}}
+        <small id="passwordHelpBlock" class="form-text text-danger">{{form.password.errors.as_text}}</small>
+    </div>
+    <button type="submit" class="btn btn-dark w-100">Login</button>
+</form>
+
+<div class="row mt-3">
+    <div class="col-md-6">
+        <a href="{% url 'password_reset' %}" class="a-link d-block">Forgot Password</a>
+    </div>
+    <div class="col-md-6">
+        <a href="{% url 'signup' %}" class="a-link d-block text-right">Register</a>
+    </div>
+</div>
+
+
+
+    
 {% endblock %}

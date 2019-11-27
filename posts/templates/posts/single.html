@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    Post
+    Post - {{ post.title }}
 {% endblock %}
 
 {% block body %}
     
 <div class="container-fluid content-container">
-    {% if user.is_authenticated %}
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top navbar-s nav-single">
-      <a class="navbar-brand ml-4" href="#">
+      <a class="navbar-brand ml-4" href="{{domain}}">
         <img src="{% static '/bootstrap/bootstrap-4.svg' %}" width="30" height="30" class="d-inline-block align-top"
           alt="">
       </a>
@@ -19,6 +19,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto mr-5 user-m">
+          {% if user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link ml-4" href="{% url 'dashboard' %}">
               <div class="nav-profile rounded-circle border" style="background-image: url('{{domain}}/storage/image_profile/{{request.user.profile.user_image}}')"></div>
@@ -27,40 +28,30 @@
           <li class="nav-item">
             <a class="nav-link ml-4" href="{% url 'logout' %}">Logout</a>
           </li>
-        </ul>
-      </div>
-    </nav>
-    {% else %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top navbar-s nav-single">
-      <a class="navbar-brand ml-4" href="#">
-        <img src="{% static '/bootstrap/bootstrap-4.svg' %}" width="30" height="30" class="d-inline-block align-top"
-          alt="">
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto mr-5 user-m">
+          <!--  -->
+          {% else %}
           <li class="nav-item">
             <a class="nav-link ml-4" href="{% url 'signup' %}">Register</a>
           </li>
           <li class="nav-item">
             <a class="nav-link ml-4" href="{% url 'login' %}">Login</a>
           </li>
+          {% endif %}
         </ul>
       </div>
     </nav>
-    {% endif %}
 
-    <div class="row row-section row-single" style="background-image: url('{{domain}}/storage/{{post.thumbnail}}')">
-      <h1>{{post.title}}</h1>
+    <div class="row row-section row-single flex-column" style="background-image: url('{{domain}}/storage/{{post.thumbnail}}')">
+      <h1 class="align-items-center d-flex">{{post.title|truncatewords:18}}</h1>
+      <div class="d-block text-center scroll-post" style="margin-top:150px">
+        <i class="fa fa-chevron-down fa-2x" style="color: #fff"></i>
+      </div>
     </div>
     <div class="row-single-post">
         <div class="author-section">
           <div class="row h-100 justify-content-center align-items-center">
-            <div class="col-sm">{{post.datepublished}}</div>
-            <div class="col-sm text-right">By {{post.author}}</div>
+            <div class="col-md col-6">{{post.datepublished}}</div>
+            <div class="col-md col-6 text-right">By {{post.author}}</div>
           </div>
         </div>
         {{post.desc|safe}}
@@ -114,25 +105,18 @@
         </div>
         {% endfor %}
     </div>
+    <!-- footer -->
     <div class="row footer">
       <div class="container h-100">
         <div class="row h-100 align-items-center justify-content-center">
-          <div class="col-sm">
-            <div class="row">
-              <div class="col-sm text-center a-link"><a href="#">Instagram</a></div>
-              <div class="col-sm text-center a-link"><a href="#">Youtube</a></div>
-            </div>
-          </div>
-          <div class="col-sm text-center">
+          <div class="col-md text-center a-link"><a href="#">Instagram</a></div>
+          <div class="col-md text-center a-link"><a href="#">Youtube</a></div>
+          <div class="col-md text-center">
             <img src="{% static '/bootstrap/bootstrap-4.svg' %}" width="30" height="30" class="d-inline-block align-top"
             alt="">
           </div>
-          <div class="col-sm">
-            <div class="row">
-              <div class="col-sm text-center a-link"><a href="#">Terms of Service</a></div>
-              <div class="col-sm text-center a-link"><a href="#">Policy</a></div>
-            </div>
-          </div>
+          <div class="col-md text-center a-link"><a href="#">Terms of Service</a></div>
+          <div class="col-md text-center a-link"><a href="#">Policy</a></div>
         </div>
       </div>
     </div>

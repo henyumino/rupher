@@ -32,3 +32,13 @@ $(".custom-file-input").on("change", function() {
     var fileName = $(this).val().split("\\").pop();
     $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });
+
+$('.scroll-post').on('click',function(){
+    // $("html, body").animate({ scrollTop: 550 }, 1000);
+    var $container = $("html,body");
+    var $scrollTo = $('.row-single-post');
+
+    $container.animate({scrollTop: $scrollTo.offset().top - $container.offset().top + $container.scrollTop(), scrollLeft: 0},1000);
+})
+
+$('#exampleModal').modal('show')

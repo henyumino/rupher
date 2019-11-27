@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    setting user    
+    Account setting - {{request.user.username}}    
 {% endblock %}
 
 {% block body %}
@@ -13,6 +13,7 @@
         <input type="file" name="image" id="">
         <input type="submit" value="Simpan">
     </form>
+    <a href="{% url 'password_change' %}">klik disini untuk mengganti password</a>
     {% for errors in errors %}
         {{errors}}
     {% endfor %}

@@ -1,14 +1,31 @@
-{% extends 'base.html' %}
+{% extends 'base_regis.html' %}
 
 {% block title %}
-    Register
+    Sign up
 {% endblock %}
 
-{% block body %}
-    <h2>Login sekarang</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Daftar</button>
-    </form>
+{% block form %}
+<form method="post">
+    {% csrf_token %}
+    <h1 class="text-center mb-4">Sign Up</h1>
+    <div class="form-group">
+        {{form.username}}
+        <small id="emailHelp" class="form-text text-danger">{{form.username.errors.as_text}}</small>
+    </div>
+    <div class="form-group">
+        {{form.email}}
+        <small id="emailHelp" class="form-text text-danger">{{form.email.errors.as_text}}</small>
+    </div>
+    <div class="form-group">
+        {{form.password1}}
+        <small id="passwordHelpBlock" class="form-text text-danger"></small>
+    </div>
+    <div class="form-group">
+        {{form.password2}}
+        {% for errors in form.password2.errors %}
+            <small id="emailHelp" class="form-text text-danger">* {{errors}}</small>
+        {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-dark w-100">Sign up</button>
+</form>
 {% endblock %}
