@@ -83,3 +83,5 @@ def edit_user(request):
 
     
     return render(request,'settings.html',{'user':user,'errors':errors,'domain':domain})
+
+
